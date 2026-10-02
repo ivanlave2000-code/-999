@@ -21,7 +21,7 @@
                 </div>
 
                 {% if user %}
-                    <!-- Если пользователь вошёл -->
+                    <!-- Якщо користувач увійшов -->
                     <div style="display: flex; align-items: center; gap: 10px;">
                         {% if user.photo_url %}
                             <img src="{{ user.photo_url }}" alt="Avatar" style="width: 35px; height: 35px; border-radius: 50%;">
@@ -30,7 +30,7 @@
                         <a href="/logout" style="color: #ef4444; text-decoration: none; font-size: 0.85rem; margin-left: 8px;">Вийти</a>
                     </div>
                 {% else %}
-                    <!-- Кнопка перехода на отдельную страницу входа -->
+                    <!-- Кнопка переходу на окрему сторінку входу -->
                     <a href="/login" class="tg-btn" style="padding: 10px 20px; font-size: 0.9rem;">Вхід / Реєстрація</a>
                 {% endif %}
             </div>
@@ -38,7 +38,7 @@
     </header>
 
     <div class="container">
-        <!-- Баннер-рекомендация (показывается только если юзер зашел, но TG не привязан) -->
+        <!-- Банер-рекомендація (показується тільки якщо користувач зайшов, але TG не прив'язаний) -->
         {% if user and not user.telegram_id %}
         <div class="tg-recommend-banner">
             <div class="tg-recommend-content">
@@ -52,15 +52,15 @@
         </div>
         {% endif %}
 
-        <!-- Блок управления заказами -->
+        <!-- Блок керування замовленнями -->
         <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 12px; width: 100%;">
             
-            <!-- Кнопка: Мои заказы -->
+            <!-- Кнопка: Мої замовлення -->
             <a href="/my-repairs" style="display: block; text-align: center; padding: 12px 20px; background: #27272a; color: #fff; border: 1px solid #3f3f46; border-radius: 10px; font-weight: 600; text-decoration: none; transition: 0.2s;">
                 📦 Мої закази (подивитися список)
             </a>
 
-            <!-- Если вошел админ — показываем дополнительную кнопку админки -->
+            <!-- Якщо увійшов адмін — показуємо додаткову кнопку адмінки -->
             {% if user and user.is_admin %}
                 <a href="/admin" style="display: block; text-align: center; padding: 12px 20px; background: #ef4444; color: #fff; border-radius: 10px; font-weight: 600; text-decoration: none;">
                     ⚙️ Панель адміністратора
