@@ -2,7 +2,7 @@ import sqlite3
 import random
 import werkzeug.security
 
-DB_NAME = "users.db"  # Укажи то же имя файла базы, что и в app.py
+DB_NAME = "users.db"  
 
 
 def get_all_users():
@@ -20,7 +20,7 @@ def init_db():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # 1. Таблица пользователей
+    # 1. Таблиця користувачів
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,7 +32,7 @@ def init_db():
         )
     """)
 
-    # 2. Таблица временных кодов авторизации Telegram
+    # 2. Таблиця часових кодів авторизації Telegram
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS auth_codes (
             code TEXT PRIMARY KEY,
@@ -43,7 +43,7 @@ def init_db():
         )
     """)
 
-    # 3. Таблица ремонтов
+    # 3.Таблиця ремонтів
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS repairs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,7 +56,7 @@ def init_db():
         )
     """)
 
-    # Динамическая проверка и дополнение отсутствующих колонок
+    # Динамічна перевірка та доповнення відсутніх колонок
     cursor.execute("PRAGMA table_info(users)")
     columns = [column[1] for column in cursor.fetchall()]
 
