@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сервис Ремонта</title>
-    <!-- Bootstrap CSS для красивых стилей и форм -->
+    <!-- Bootstrap CSS для красивих стилів та форм -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -28,7 +28,7 @@
     </nav>
 
     <div class="container">
-        <!-- Отображение сообщений flash -->
+        <!-- Відображення повідомлень flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -39,7 +39,7 @@
             {% endif %}
         {% endwith %}
 
-        <!-- Сюда подставляется содержимое других страниц -->
+        <!-- Сюди підставляється вміст інших сторінок -->
         {% block content %}{% endblock %}
     </div>
 </body>
