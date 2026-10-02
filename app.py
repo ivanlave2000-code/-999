@@ -6,15 +6,13 @@ import database
 
 app = Flask(__name__)
 
-# Секретный ключ для работы сессий Flask
+# Секретний ключ для роботи сесій Flask
 app.secret_key = os.urandom(24)
-
-# Инициализируем БД при старте приложения
 database.init_db()
 
 
 def get_current_user():
-    """Вспомогательная функция для получения текущего пользователя из сессии"""
+    """Допоміжна функція для отримання поточного користувача із сесії"""
     user_id = session.get("user_id")
     if not user_id:
         return None
@@ -22,7 +20,7 @@ def get_current_user():
 
 
 def get_or_create_user_code(user_id):
-    """Генерация или получение существующего кода для привязки"""
+    """Генерація або отримання існуючого коду для прив'язки"""
     conn = sqlite3.connect(database.DB_NAME)
     cursor = conn.cursor()
     
@@ -58,7 +56,7 @@ def index():
 def admin_page():
     user = get_current_user()
     
-    # Защита: доступ только для авторизованных админов
+    # Захист: доступ лише для авторизованих адмінів
     if not user or not user.get("is_admin"):
         session["error"] = "Доступ запрещен!"
         return redirect(url_for("index"))
@@ -71,7 +69,7 @@ def admin_page():
 def update_status(repair_id):
     user = get_current_user()
     
-    # Проверка: залогинен ли юзер и есть ли у него права админа
+    # Перевірка: чи залогінений користувач і чи має він права адміна
     if not user or not user.get('is_admin'):
         flash('У вас нет прав для изменения статуса!', 'danger')
         return redirect(url_for('index'))
@@ -88,19 +86,19 @@ def update_status(repair_id):
 def admin_create_repair():
     user = get_current_user()
 
-    # Защита: доступ только для админов
+    # Захист: доступ лише для авторизованих адмінів
     if not user or not user.get("is_admin"):
         flash("У вас нет прав для доступа!", "danger")
         return redirect(url_for("index"))
 
     if request.method == "POST":
-        # Админ может выбрать клиента по его ID или username
+        # Адмін може вибрати клієнта за його ID або username
         user_id = request.form.get("user_id")
         device_name = request.form.get("device_name", "").strip()
         description = request.form.get("description", "").strip()
 
         if not user_id or not device_name:
-            users = database.get_all_users()  # Список пользователей для выпадающего списка
+            users = database.get_all_users()  # Список користувачів для списку
             flash("Выберите пользователя и укажите название устройства!", "danger")
             return render_template("admin_create_repair.html", user=user, users=users)
 
@@ -108,7 +106,7 @@ def admin_create_repair():
         flash("✅ Новая заявка на ремонт успешно создана!", "success")
         return redirect(url_for("admin_page"))
 
-    # На GET запрос получаем список всех пользователей, чтобы админ мог выбрать клиента
+    # На GET запит отримуємо список усіх користувачів, щоб адмін міг обрати клієнта
     users = database.get_all_users()
     return render_template("admin_create_repair.html", user=user, users=users)
 
@@ -161,7 +159,7 @@ def login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip()
         
-        # Проверяем пользователя через функцию модуля database
+        # Перевіряємо користувача через функцію модуля database
         user = database.check_user(username, password)
         
         if user:
