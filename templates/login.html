@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід — TechService</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3.0">
+</head>
+<body style="background: #111115; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+
+    <div style="max-width: 400px; width: 100%; padding: 30px; background: #1e1e24; border-radius: 16px; border: 1px solid #2d2d35; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+        <h2 style="margin-top: 0; text-align: center;">🔑 Вхід до кабінету</h2>
+        
+        {% if error %}
+            <p style="color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 8px; font-size: 0.9rem; text-align: center;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/login" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+            <div>
+                <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; color: #a1a1aa;">Логін:</label>
+                <input type="text" name="username" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #3f3f46; background: #18181b; color: #fff; box-sizing: border-box; outline: none;">
+            </div>
+            <div>
+                <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; color: #a1a1aa;">Пароль:</label>
+                <input type="password" name="password" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #3f3f46; background: #18181b; color: #fff; box-sizing: border-box; outline: none;">
+            </div>
+            <button type="submit" style="padding: 12px; background: #6366f1; color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">Увійти</button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: #a1a1aa;">
+            Немає акаунту? <a href="/register" style="color: #818cf8; text-decoration: none; font-weight: 500;">Зареєструватися</a>
+        </div>
+        <div style="text-align: center; margin-top: 10px; font-size: 0.85rem;">
+            <a href="/" style="color: #a1a1aa; text-decoration: none;">← Повернутися на головну</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створити заявку на ремонт — TechService</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="background: #111115; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;">
+
+    <div style="max-width: 480px; width: 100%; padding: 30px; background: #1e1e24; border-radius: 16px; border: 1px solid #2d2d35; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin: 0; font-size: 1.4rem;">🔧 Нова заявка на ремонт</h2>
+            <a href="/" style="color: #a1a1aa; text-decoration: none; font-size: 0.9rem;">← На головну</a>
+        </div>
+
+        {% if error %}
+            <p style="color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/create-repair" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+                <label style="display: block; font-size: 0.85rem; color: #a1a1aa; margin-bottom: 6px;">Назва пристрою / комплектуючих *</label>
+                <input type="text" name="device_name" placeholder="наприклад: ПК (Игровой), Игровой ноутбук Lenovo" required style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid #3f3f46; background: #09090b; color: #fff; outline: none; font-size: 0.95rem;">
+            </div>
+
+            <div>
+                <label style="display: block; font-size: 0.85rem; color: #a1a1aa; margin-bottom: 6px;">Опис проблеми / що потрібно зробити</label>
+                <textarea name="description" rows="4" placeholder="наприклад: Не вмикається після чистки, шумлять вентилятори або заміна термопасти..." style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid #3f3f46; background: #09090b; color: #fff; outline: none; font-size: 0.95rem; resize: vertical;"></textarea>
+            </div>
+
+            <button type="submit" style="padding: 12px; background: #22c55e; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s;">
+                Відправити на ремонт
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

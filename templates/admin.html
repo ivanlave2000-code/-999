@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🛠️ Панель управления ремонтами</h2>
+        <a href="/" class="btn btn-outline-light btn-sm">На главную</a>
+    </div>
+
+<a href="{{ url_for('admin_create_repair') }}" class="btn btn-primary mb-3">
+    + Создать новый заказ
+</a>
+
+    <!-- Сообщения об успехе/ошибках -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="table-responsive bg-secondary rounded p-3">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Клиент</th>
+                    <th>Устройство</th>
+                    <th>Описание</th>
+                    <th>Дата создания</th>
+                    <th>Текущий статус</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for repair in repairs %}
+                <tr>
+                    <td><b>#{{ repair.id }}</b></td>
+                    <td>{{ repair.username }}</td>
+                    <td>{{ repair.device_name }}</td>
+                    <td>{{ repair.description or '—' }}</td>
+                    <td>{{ repair.created_at }}</td>
+                    <td>
+                        {% if repair.status == 'В работе' %}
+                            <span class="badge bg-warning text-dark">{{ repair.status }}</span>
+                        {% elif repair.status == 'Готово' %}
+                            <span class="badge bg-success">{{ repair.status }}</span>
+                        {% elif repair.status == 'Выдан' %}
+                            <span class="badge bg-secondary">{{ repair.status }}</span>
+                        {% else %}
+                            <span class="badge bg-info">{{ repair.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- Форма смены статуса прямо в таблице -->
+                        <form action="/admin/update_status/{{ repair.id }}" method="POST" class="d-flex gap-2">
+                            <select name="status" class="form-select form-select-sm bg-dark text-light border-secondary">
+                                <option value="В работе" {% if repair.status == 'В работе' %}selected{% endif %}>В работе</option>
+                                <option value="Готово" {% if repair.status == 'Готово' %}selected{% endif %}>Готово</option>
+                                <option value="Выдан" {% if repair.status == 'Выдан' %}selected{% endif %}>Выдан</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Заказов пока нет</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

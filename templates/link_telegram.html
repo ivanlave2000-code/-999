@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прив'язка Telegram — TechService</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3.0">
+</head>
+<body style="background: #111115; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;">
+
+    <div style="max-width: 440px; width: 100%; padding: 30px; background: #1e1e24; border-radius: 16px; border: 1px solid #2d2d35; box-shadow: 0 10px 25px rgba(0,0,0,0.4); text-align: center;">
+        
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">✈️</div>
+        <h2 style="margin: 0 0 10px 0;">Прив'язка Telegram</h2>
+        <p style="color: #a1a1aa; font-size: 0.9rem; margin-bottom: 25px;">Оберіть зручний спосіб прив'язки вашого акаунту</p>
+
+        {% if error %}
+            <p style="color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 20px;">{{ error }}</p>
+        {% endif %}
+
+        <!-- Способ 1: Быстрый переход -->
+        <div style="background: #18181b; padding: 18px; border-radius: 12px; border: 1px solid #2d2d35; margin-bottom: 20px;">
+            <strong style="display: block; margin-bottom: 8px; font-size: 0.95rem;">Спосіб 1: Перехід у бот (у 1 клік)</strong>
+            <p style="color: #71717a; font-size: 0.8rem; margin-bottom: 12px;">Натисніть кнопку, перейдіть у бот та натисніть <b>START</b></p>
+            
+            <a href="{{ tg_link }}" target="_blank" class="tg-btn" style="display: block; width: 100%; box-sizing: border-box; text-align: center; text-decoration: none; padding: 10px; font-weight: 600;">
+                Перейти в Telegram
+            </a>
+        </div>
+
+        <div style="color: #52525b; font-size: 0.85rem; margin: 15px 0;">— або —</div>
+
+        <!-- Спосіб 2: Ввод кода -->
+        <div style="background: #18181b; padding: 18px; border-radius: 12px; border: 1px solid #2d2d35;">
+            <strong style="display: block; margin-bottom: 8px; font-size: 0.95rem;">Спосіб 2: Ввести код з бота</strong>
+            <p style="color: #71717a; font-size: 0.8rem; margin-bottom: 12px;">Введіть 6-значний код, який надіслав вам бот</p>
+            
+        <form method="POST" action="/link_telegram" style="display: flex; gap: 8px;">
+            <input type="text" name="code" placeholder="000000" maxlength="6" required style="padding: 10px; border-radius: 8px; border: 1px solid #3f3f46; background: #09090b; color: #fff; text-align: center; font-size: 1.1rem; width: 100%; outline: none;">
+            <button type="submit" style="padding: 10px 16px; background: #22c55e; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Підтвердити</button>
+        </form>
+        </div>
+    </div>
+
+</body>
+</html>

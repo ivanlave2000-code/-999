@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Чат с поддержкой — TechService</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body class="chat-page-body">
+
+    <div class="messenger-container">
+        <!-- Левое инфо-меню -->
+        <div class="messenger-sidebar">
+            <a href="/" class="back-link">← На главный сайт</a>
+            <div class="support-card">
+                <div class="avatar">👨‍🔧</div>
+                <h3>Служба поддержки</h3>
+                <p class="status-online">● В сети</p>
+            </div>
+            <p class="sidebar-text">Пишите по любым вопросам: от стоимости ремонта до наличия запчастей.</p>
+        </div>
+
+        <!-- Окно переписки -->
+        <div class="messenger-main">
+            <div class="messenger-header">
+                <span>Чат с сервисный центром</span>
+            </div>
+
+            <div id="chat-messages" class="messenger-messages">
+                <div class="msg system">Задайте вопрос — мастер ответит вам в течение нескольких минут!</div>
+            </div>
+
+            <div class="messenger-input-bar">
+                <input type="text" id="chat-input" placeholder="Напишите сообщение..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
