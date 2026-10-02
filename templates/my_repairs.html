@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мої закази — TechService</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body style="background: #111115; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;">
+
+    <div style="max-width: 600px; width: 100%; padding: 30px; background: #1e1e24; border-radius: 16px; border: 1px solid #2d2d35; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="margin: 0; font-size: 1.4rem;">📦 Мої закази на ремонт</h2>
+            <a href="/" style="color: #a1a1aa; text-decoration: none; font-size: 0.9rem;">← На головну</a>
+        </div>
+
+        {% if not repairs %}
+            <div style="text-align: center; padding: 30px 0; color: #71717a;">
+                <p style="margin-bottom: 15px;">У вас поки немає активних замовлень.</p>
+                <a href="/create-repair" style="color: #22c55e; text-decoration: none; font-weight: 600;">+ Створити перше замовлення</a>
+            </div>
+        {% else %}
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                {% for r in repairs %}
+                    <div style="background: #18181b; padding: 16px; border-radius: 10px; border: 1px solid #2d2d35; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="font-size: 1.05rem; display: block; margin-bottom: 4px;">{{ r.device_name }}</strong>
+                            <p style="margin: 0; color: #a1a1aa; font-size: 0.85rem;">{{ r.description or 'Опис відсутній' }}</p>
+                            <span style="color: #52525b; font-size: 0.75rem; display: block; margin-top: 6px;">Заказ #{{ r.id }} • {{ r.created_at }}</span>
+                        </div>
+                        <div>
+                            {% if r.status == 'Готово' %}
+                                <span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">🟢 Готово</span>
+                            {% elif r.status == 'В работе' %}
+                                <span style="background: rgba(234, 179, 8, 0.2); color: #facc15; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">🟡 В роботі</span>
+                            {% else %}
+                                <span style="background: rgba(113, 113, 122, 0.2); color: #a1a1aa; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">⚪ Видано</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
