@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import sys
-from html import escape  # Для экранирования спецсимволов HTML
+from html import escape
 
 from aiogram import Bot, Dispatcher, F, html, types
 from aiogram.filters import Command
@@ -18,7 +18,7 @@ from aiogram.types import (
 from database import generate_auth_code, init_db
 
 # ==========================================
-# 📊 НАСТРОЙКА ЛОГИРОВАНИЯ
+# 📊 НАЛАШТУВАННЯ ЛОГУВАННЯ
 # ==========================================
 logging.basicConfig(
     level=logging.INFO,
@@ -28,10 +28,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ==========================================
-# ⚙️ КОНФИГУРАЦИЯ БОТА
+# ⚙️ КОНФІГУРАЦІЯ БОТА
 # ==========================================
-BOT_TOKEN = "8953457596:AAHOBGTQW_nRcQ2ewEW37HJUzbxQrWWb-B8"
-ADMIN_ID = 5749863973  # Твой Telegram ID
+BOT_TOKEN = "-"
+ADMIN_ID = -
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
@@ -57,23 +57,23 @@ async def start_cmd(message: types.Message):
     
 @dp.message(Command("makeadmin"))
 async def make_admin_handler(message: types.Message):
-    # Разбиваем сообщение по пробелам: /makeadmin secret_password
+    # Розбиваємо повідомлення за пробілами: /makeadmin secret_password
     args = message.text.split()
     
-    SECRET_KEY = "supersecret123"  # Придумай свой пароль
+    SECRET_KEY = "-" 
     
     if len(args) < 2 or args[1] != SECRET_KEY:
         await message.answer("❌ Неверный пароль для получения прав администратора.")
         return
 
-    # Если пароль совпал, выдаем админку по telegram_id
+    # Якщо пароль збігся, видаємо адмінку по telegram_id
     import sqlite3
     from database import DB_NAME
 
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     
-    # Проверяем, привязан ли этот Telegram к аккаунту на сайте
+    # Перевіряємо, чи прив'язаний цей Telegram до облікового запису на сайті
     cursor.execute("SELECT username FROM users WHERE telegram_id = ?", (message.from_user.id,))
     user = cursor.fetchone()
 
@@ -82,7 +82,7 @@ async def make_admin_handler(message: types.Message):
         conn.close()
         return
 
-    # Выдаем права
+    # Видаємо права
     cursor.execute("UPDATE users SET is_admin = 1 WHERE telegram_id = ?", (message.from_user.id,))
     conn.commit()
     conn.close()
@@ -139,7 +139,7 @@ async def send_admin_reply(message: types.Message, state: FSMContext):
         return
 
     try:
-        # Экранируем текст от админа
+        # Екрануємо текст від адміну
         clean_text = escape(message.text)
         user_response = (
             f"💬 <b>ВІДПОВІДЬ СЛУЖБИ ПІДТРИМКИ</b>\n\n"
@@ -174,7 +174,7 @@ async def handle_user_message(message: types.Message):
         ]
     )
 
-    # Экранируем имя и текст сообщения от пользователя
+    # Екрануємо ім'я та текст повідомлення від користувача
     clean_name = escape(user.first_name)
     clean_text = escape(message.text)
 
